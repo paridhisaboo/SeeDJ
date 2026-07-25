@@ -1,0 +1,15 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+pydantic==2.9.2
+pydantic-settings==2.5.2
+python-dotenv==1.0.1
+websockets==13.1
+
+# Rekordbox
+pyrekordbox==0.4.4
+sqlcipher3-wheels; platform_system != "Linux"
+
+# Audio capture + analysis
+soundcard==0.4.3
+numpy==1.26.4
+aubio==0.4.9  # see README if this fails to build

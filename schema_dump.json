@@ -1,0 +1,941 @@
+/Users/apple/SeeDJ/app/rekordbox/library.py:177: SAWarning: Could not instantiate type <class 'sqlalchemy.sql.sqltypes.INTEGER'> with reflected arguments ['1']; using no arguments.
+  columns = [col["name"] for col in inspector.get_columns(table_name)]
+{
+  "agentNotification": {
+    "columns": [
+      "ID",
+      "graphic_area",
+      "text_area",
+      "os_notification",
+      "start_datetime",
+      "end_datetime",
+      "display_datetime",
+      "interval",
+      "category",
+      "category_color",
+      "title",
+      "description",
+      "url",
+      "image",
+      "image_path",
+      "read_status",
+      "last_displayed_datetime",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "agentNotificationLog": {
+    "columns": [
+      "ID",
+      "gigya_uid",
+      "event_date",
+      "reported_datetime",
+      "kind",
+      "value",
+      "notification_id",
+      "link",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "agentRegistry": {
+    "columns": [
+      "registry_id",
+      "id_1",
+      "id_2",
+      "int_1",
+      "int_2",
+      "str_1",
+      "str_2",
+      "date_1",
+      "date_2",
+      "text_1",
+      "text_2",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "cloudAgentRegistry": {
+    "columns": [
+      "ID",
+      "int_1",
+      "int_2",
+      "str_1",
+      "str_2",
+      "date_1",
+      "date_2",
+      "text_1",
+      "text_2",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "contentActiveCensor": {
+    "columns": [
+      "ID",
+      "ContentID",
+      "ActiveCensors",
+      "rb_activecensor_count",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "contentCue": {
+    "columns": [
+      "ID",
+      "ContentID",
+      "Cues",
+      "rb_cue_count",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "contentFile": {
+    "columns": [
+      "ID",
+      "ContentID",
+      "Path",
+      "Hash",
+      "Size",
+      "rb_local_path",
+      "rb_insync_hash",
+      "rb_insync_local_usn",
+      "rb_file_hash_dirty",
+      "rb_local_file_status",
+      "rb_in_progress",
+      "rb_process_type",
+      "rb_temp_path",
+      "rb_priority",
+      "rb_file_size_dirty",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdActiveCensor": {
+    "columns": [
+      "ID",
+      "ContentID",
+      "InMsec",
+      "OutMsec",
+      "Info",
+      "ParameterList",
+      "ContentUUID",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdAlbum": {
+    "columns": [
+      "ID",
+      "Name",
+      "AlbumArtistID",
+      "ImagePath",
+      "Compilation",
+      "SearchStr",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdArtist": {
+    "columns": [
+      "ID",
+      "Name",
+      "SearchStr",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdCategory": {
+    "columns": [
+      "ID",
+      "MenuItemID",
+      "Seq",
+      "Disable",
+      "InfoOrder",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdCloudExportPlaylist": {
+    "columns": [
+      "ID",
+      "Seq",
+      "Name",
+      "ImagePath",
+      "Attribute",
+      "ParentID",
+      "SmartList",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdCloudExportSongPlaylist": {
+    "columns": [
+      "ID",
+      "CloudExportPlaylistID",
+      "ContentID",
+      "TrackNo",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdCloudFilterPlaylist": {
+    "columns": [
+      "ID",
+      "PlaylistUUID",
+      "Seq",
+      "ParentID",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdCloudProperty": {
+    "columns": [
+      "ID",
+      "Reserved1",
+      "Reserved2",
+      "Reserved3",
+      "Reserved4",
+      "Reserved5",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdColor": {
+    "columns": [
+      "ID",
+      "ColorCode",
+      "SortKey",
+      "Commnt",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdContent": {
+    "columns": [
+      "ID",
+      "FolderPath",
+      "FileNameL",
+      "FileNameS",
+      "Title",
+      "ArtistID",
+      "AlbumID",
+      "GenreID",
+      "BPM",
+      "Length",
+      "TrackNo",
+      "BitRate",
+      "BitDepth",
+      "Commnt",
+      "FileType",
+      "Rating",
+      "ReleaseYear",
+      "RemixerID",
+      "LabelID",
+      "OrgArtistID",
+      "KeyID",
+      "StockDate",
+      "ColorID",
+      "DJPlayCount",
+      "ImagePath",
+      "MasterDBID",
+      "MasterSongID",
+      "AnalysisDataPath",
+      "SearchStr",
+      "FileSize",
+      "DiscNo",
+      "ComposerID",
+      "Subtitle",
+      "SampleRate",
+      "DisableQuantize",
+      "Analysed",
+      "ReleaseDate",
+      "DateCreated",
+      "ContentLink",
+      "Tag",
+      "ModifiedByRBM",
+      "HotCueAutoLoad",
+      "DeliveryControl",
+      "DeliveryComment",
+      "CueUpdated",
+      "AnalysisUpdated",
+      "TrackInfoUpdated",
+      "Lyricist",
+      "ISRC",
+      "SamplerTrackInfo",
+      "SamplerPlayOffset",
+      "SamplerGain",
+      "VideoAssociate",
+      "LyricStatus",
+      "ServiceID",
+      "OrgFolderPath",
+      "Reserved1",
+      "Reserved2",
+      "Reserved3",
+      "Reserved4",
+      "ExtInfo",
+      "rb_file_id",
+      "DeviceID",
+      "rb_LocalFolderPath",
+      "SrcID",
+      "SrcTitle",
+      "SrcArtistName",
+      "SrcAlbumName",
+      "SrcLength",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdCue": {
+    "columns": [
+      "ID",
+      "ContentID",
+      "InMsec",
+      "InFrame",
+      "InMpegFrame",
+      "InMpegAbs",
+      "OutMsec",
+      "OutFrame",
+      "OutMpegFrame",
+      "OutMpegAbs",
+      "Kind",
+      "Color",
+      "ColorTableIndex",
+      "ActiveLoop",
+      "Comment",
+      "BeatLoopSize",
+      "CueMicrosec",
+      "InPointSeekInfo",
+      "OutPointSeekInfo",
+      "ContentUUID",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdDevice": {
+    "columns": [
+      "ID",
+      "MasterDBID",
+      "Name",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdGenre": {
+    "columns": [
+      "ID",
+      "Name",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdHistory": {
+    "columns": [
+      "ID",
+      "Seq",
+      "Name",
+      "Attribute",
+      "ParentID",
+      "DateCreated",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdHotCueBanklist": {
+    "columns": [
+      "ID",
+      "Seq",
+      "Name",
+      "ImagePath",
+      "Attribute",
+      "ParentID",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdKey": {
+    "columns": [
+      "ID",
+      "ScaleName",
+      "Seq",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdLabel": {
+    "columns": [
+      "ID",
+      "Name",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdMenuItems": {
+    "columns": [
+      "ID",
+      "Class",
+      "Name",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdMixerParam": {
+    "columns": [
+      "ID",
+      "ContentID",
+      "GainHigh",
+      "GainLow",
+      "PeakHigh",
+      "PeakLow",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdMyTag": {
+    "columns": [
+      "ID",
+      "Seq",
+      "Name",
+      "Attribute",
+      "ParentID",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdPlaylist": {
+    "columns": [
+      "ID",
+      "Seq",
+      "Name",
+      "ImagePath",
+      "Attribute",
+      "ParentID",
+      "SmartList",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdProperty": {
+    "columns": [
+      "DBID",
+      "DBVersion",
+      "BaseDBDrive",
+      "CurrentDBDrive",
+      "DeviceID",
+      "Reserved1",
+      "Reserved2",
+      "Reserved3",
+      "Reserved4",
+      "Reserved5",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdRecommendLike": {
+    "columns": [
+      "ID",
+      "ContentID1",
+      "ContentID2",
+      "LikeRate",
+      "DataCreatedH",
+      "DataCreatedL",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdRelatedTracks": {
+    "columns": [
+      "ID",
+      "Seq",
+      "Name",
+      "Attribute",
+      "ParentID",
+      "Criteria",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdSampler": {
+    "columns": [
+      "ID",
+      "Seq",
+      "Name",
+      "Attribute",
+      "ParentID",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdSharedPlaylist": {
+    "columns": [
+      "ID",
+      "data_selection",
+      "edited_at",
+      "int_1",
+      "int_2",
+      "str_1",
+      "str_2",
+      "text_1",
+      "text_2",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdSharedPlaylistUser": {
+    "columns": [
+      "ID",
+      "member_type",
+      "member_id",
+      "status",
+      "invitation_expires_at",
+      "invited_at",
+      "joined_at",
+      "int_1",
+      "int_2",
+      "str_1",
+      "str_2",
+      "text_1",
+      "text_2",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdSongHistory": {
+    "columns": [
+      "ID",
+      "HistoryID",
+      "ContentID",
+      "TrackNo",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdSongHotCueBanklist": {
+    "columns": [
+      "ID",
+      "HotCueBanklistID",
+      "ContentID",
+      "TrackNo",
+      "CueID",
+      "InMsec",
+      "InFrame",
+      "InMpegFrame",
+      "InMpegAbs",
+      "OutMsec",
+      "OutFrame",
+      "OutMpegFrame",
+      "OutMpegAbs",
+      "Color",
+      "ColorTableIndex",
+      "ActiveLoop",
+      "Comment",
+      "BeatLoopSize",
+      "CueMicrosec",
+      "InPointSeekInfo",
+      "OutPointSeekInfo",
+      "HotCueBanklistUUID",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdSongMyTag": {
+    "columns": [
+      "ID",
+      "MyTagID",
+      "ContentID",
+      "TrackNo",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdSongPlaylist": {
+    "columns": [
+      "ID",
+      "PlaylistID",
+      "ContentID",
+      "TrackNo",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdSongRelatedTracks": {
+    "columns": [
+      "ID",
+      "RelatedTracksID",
+      "ContentID",
+      "TrackNo",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdSongSampler": {
+    "columns": [
+      "ID",
+      "SamplerID",
+      "ContentID",
+      "TrackNo",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdSongTagList": {
+    "columns": [
+      "ID",
+      "ContentID",
+      "TrackNo",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "djmdSort": {
+    "columns": [
+      "ID",
+      "MenuItemID",
+      "Seq",
+      "Disable",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "hotCueBanklistCue": {
+    "columns": [
+      "ID",
+      "HotCueBanklistID",
+      "Cues",
+      "rb_cue_count",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "imageFile": {
+    "columns": [
+      "ID",
+      "TableName",
+      "TargetUUID",
+      "TargetID",
+      "Path",
+      "Hash",
+      "Size",
+      "rb_local_path",
+      "rb_insync_hash",
+      "rb_insync_local_usn",
+      "rb_file_hash_dirty",
+      "rb_local_file_status",
+      "rb_in_progress",
+      "rb_process_type",
+      "rb_temp_path",
+      "rb_priority",
+      "rb_file_size_dirty",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "settingFile": {
+    "columns": [
+      "ID",
+      "Path",
+      "Hash",
+      "Size",
+      "rb_local_path",
+      "rb_insync_hash",
+      "rb_insync_local_usn",
+      "rb_file_hash_dirty",
+      "rb_file_size_dirty",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "uuidIDMap": {
+    "columns": [
+      "ID",
+      "TableName",
+      "TargetUUID",
+      "CurrentID",
+      "UUID",
+      "rb_data_status",
+      "rb_local_data_status",
+      "rb_local_deleted",
+      "rb_local_synced",
+      "usn",
+      "rb_local_usn",
+      "created_at",
+      "updated_at"
+    ]
+  }
+}
+46 tables found.
+Look for table names containing 'History', 'Song', or 'Player' — those are your best candidates for a now-playing signal.
+
