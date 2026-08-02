@@ -1,5 +1,3 @@
-/Users/apple/SeeDJ/app/rekordbox/library.py:177: SAWarning: Could not instantiate type <class 'sqlalchemy.sql.sqltypes.INTEGER'> with reflected arguments ['1']; using no arguments.
-  columns = [col["name"] for col in inspector.get_columns(table_name)]
 {
   "agentNotification": {
     "columns": [
@@ -936,6 +934,3 @@
     ]
   }
 }
-46 tables found.
-Look for table names containing 'History', 'Song', or 'Player' — those are your best candidates for a now-playing signal.
-

@@ -160,19 +160,25 @@ class RekordboxLibrary:
 
     # -- Backend-specific iteration ------------------------------------
 
+    def get_track_by_id(self, content_id: str) -> Track | None:
+        """
+        Direct lookup by DjmdContent.ID — used by the now-playing poller to
+        turn a ContentID from djmdSongHistory into a full Track. Only works
+        in "db" mode (XML mode has no fast indexed lookup, and isn't used
+        for live now-playing anyway since the XML export is a manual,
+        point-in-time snapshot rather than something Rekordbox updates live).
+        """
+        if self.source != "db" or self._db is None:
+            return None
+        content = self._db.get_content(ID=content_id)  # filter_by ID -> single object or None
+        if content is None:
+            return None
+        return _content_to_track(content)
+
     def _iter_tracks_db(self) -> Iterator[Track]:
         assert self._db is not None
         for content in self._db.get_content():
-            yield Track(
-                id=str(getattr(content, "ID", "")),
-                title=getattr(content, "Title", None),
-                artist=_safe_artist_name(content),
-                bpm=_safe_float(getattr(content, "BPM", None), scale=1 / 100),
-                key=_safe_key_name(content),
-                length_seconds=getattr(content, "Length", None),
-                analysis_data_path=getattr(content, "AnalysisDataPath", None),
-                source="db",
-            )
+            yield _content_to_track(content)
 
     def _iter_tracks_xml(self) -> Iterator[Track]:
         assert self._xml is not None
@@ -188,6 +194,19 @@ class RekordboxLibrary:
                 analysis_data_path=None,  # XML export doesn't include this
                 source="xml",
             )
+
+
+def _content_to_track(content: Any) -> Track:
+    return Track(
+        id=str(getattr(content, "ID", "")),
+        title=getattr(content, "Title", None),
+        artist=_safe_artist_name(content),
+        bpm=_safe_float(getattr(content, "BPM", None), scale=1 / 100),
+        key=_safe_key_name(content),
+        length_seconds=getattr(content, "Length", None),
+        analysis_data_path=getattr(content, "AnalysisDataPath", None),
+        source="db",
+    )
 
 
 def _safe_float(value: Any, scale: float = 1.0) -> float | None:

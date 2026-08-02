@@ -1,33 +1,26 @@
 """
-Best-effort "what's currently playing in Rekordbox" poller.
+Live "what's currently playing in Rekordbox" poller.
 
-READ THIS BEFORE TRUSTING THIS MODULE'S OUTPUT:
+Grounded in your actual database schema (not guessed) — confirmed via
+`scripts/explore_rekordbox_schema.py` against a real Rekordbox 7 / macOS
+install:
 
-Rekordbox does not expose an official, documented "now playing" signal for
-laptop-only software mode (that's the Pro DJ Link hardware world, which
-needs real CDJs on a network — see the research brief). The best available
-proxy is polling the local database for the most recently touched
-history/play-related row, but:
+    djmdSongHistory: ContentID, HistoryID, TrackNo, created_at, updated_at
+    djmdHistory:     Name, DateCreated, Seq  (one row per History playlist/session)
 
-  - The exact table (`DjmdSongHistory`, `DjmdHistory`, something else
-    depending on version) and the column that reflects "most recent" vs.
-    "most recently added to a saved history playlist" (which is NOT the
-    same thing as "currently playing") are not confirmed here.
-  - This has NOT been verified against a live install. Run
-    `scripts/explore_rekordbox_schema.py` while a track is playing, diff
-    the output before/after switching tracks, and find the table/column
-    that actually changes in real time. Then fill in the constants below.
+Rekordbox's "History" feature auto-logs played tracks as you DJ — each
+track that plays gets a `DjmdSongHistory` row pointing at its `DjmdContent`
+via `ContentID`. The most-recently-created row across ALL history sessions
+(not just the latest `HistoryID`) is, by definition, the most recently
+played track — so we don't need to first find "the active session," just
+order by `created_at` descending and take the top row.
 
-Until you've done that verification, `poll_once()` will raise
-NotImplementedError with a pointer back to this docstring — better to fail
-loudly than silently return wrong track info to the classifier downstream.
-
-Once verified, the intended shape is: poll every
-`settings.rekordbox_poll_interval_seconds`, diff against the last seen row,
-and emit a NowPlayingEvent with confidence="confirmed" when the DB row
-matches, or confidence="guessed" if you're inferring from BPM/audio
-matching instead (see app/audio/features.py for the tempo signal you'd
-cross-reference against RekordboxLibrary.find_by_bpm_range()).
+Caveat worth knowing: this depends on Rekordbox's history-logging being
+enabled, which it is by default, but if you ever find this poller isn't
+picking up track changes, check Rekordbox's preferences for anything
+related to "Auto Create History Playlist" / play history logging, and
+confirm by playing a track then re-running explore_rekordbox_schema.py to
+see whether a fresh djmdSongHistory row with a recent created_at appears.
 """
 from __future__ import annotations
 
@@ -41,36 +34,18 @@ from app.rekordbox.library import RekordboxLibrary
 
 logger = logging.getLogger(__name__)
 
-# --- Fill these in after running scripts/explore_rekordbox_schema.py ---
-HISTORY_TABLE_NAME: str | None = None  # e.g. "DjmdSongHistory"
-HISTORY_TIMESTAMP_COLUMN: str | None = None  # e.g. "updated_at" / "created_at"
-HISTORY_CONTENT_ID_COLUMN: str | None = None  # e.g. "ContentID"
-# -------------------------------------------------------------------
-
 
 class NowPlayingPoller:
     def __init__(self, library: RekordboxLibrary) -> None:
         self.library = library
-        self._last_track_id: str | None = None
-        self._verified = all(
-            [HISTORY_TABLE_NAME, HISTORY_TIMESTAMP_COLUMN, HISTORY_CONTENT_ID_COLUMN]
-        )
+        self._last_content_id: str | None = None
 
     async def run_forever(self) -> None:
-        if not self._verified:
+        if self.library.source != "db":
             logger.warning(
-                "now_playing schema not verified yet — skipping live polling. "
-                "See app/rekordbox/now_playing.py docstring for how to fix this. "
-                "The rest of the pipeline (library + live audio) works fine without it."
-            )
-            await bus.publish(
-                ErrorEvent(
-                    source="rekordbox.now_playing",
-                    message=(
-                        "Now-playing schema unverified for your Rekordbox version. "
-                        "Run scripts/explore_rekordbox_schema.py to fix — see README."
-                    ),
-                ).to_wire()
+                "now_playing polling requires DB mode (XML export is a static "
+                "snapshot, not live) — skipping. Library opened via: %s",
+                self.library.source,
             )
             return
 
@@ -85,17 +60,42 @@ class NowPlayingPoller:
             await asyncio.sleep(settings.rekordbox_poll_interval_seconds)
 
     async def _poll_once(self) -> None:
-        # Implemented once HISTORY_TABLE_NAME etc. are verified. Sketch:
-        #
-        #   from sqlalchemy import text
-        #   row = self.library._db.session.execute(
-        #       text(f"SELECT {HISTORY_CONTENT_ID_COLUMN} FROM {HISTORY_TABLE_NAME} "
-        #            f"ORDER BY {HISTORY_TIMESTAMP_COLUMN} DESC LIMIT 1")
-        #   ).first()
-        #   ... look up the track in self.library, compare to self._last_track_id,
-        #   ... publish a NowPlayingEvent if it changed.
-        #
-        # Left unimplemented until verified against a real install rather
-        # than guessing the query and shipping something that looks like it
-        # works but returns stale/wrong data.
-        raise NotImplementedError
+        from pyrekordbox.db6.tables import DjmdSongHistory
+
+        db = self.library._db  # noqa: SLF001 - this module and library.py are tightly coupled by design
+        if db is None or db.session is None:
+            return
+
+        latest = (
+            db.session.query(DjmdSongHistory)
+            .order_by(DjmdSongHistory.created_at.desc())
+            .first()
+        )
+        if latest is None or not latest.ContentID:
+            return
+
+        if latest.ContentID == self._last_content_id:
+            return  # no change since last poll
+
+        self._last_content_id = latest.ContentID
+
+        track = self.library.get_track_by_id(latest.ContentID)
+        if track is None:
+            logger.warning(
+                "djmdSongHistory pointed at ContentID=%s but no matching "
+                "DjmdContent found (deleted track?)",
+                latest.ContentID,
+            )
+            return
+
+        await bus.publish(
+            NowPlayingEvent(
+                track_id=track.id,
+                title=track.title,
+                artist=track.artist,
+                bpm=track.bpm,
+                key=track.key,
+                confidence="confirmed",
+            ).to_wire()
+        )
+        logger.info("Now playing: %s — %s", track.title, track.artist)
